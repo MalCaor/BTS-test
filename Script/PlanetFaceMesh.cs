@@ -52,8 +52,10 @@ public class PlanetFaceMesh
                 Vector2 percent = new Vector2(x, y) / (resolution-1);
                 // set the coor of the point
                 Vector3 pointOnUnitCube = localUp + (percent.x - .5f) * 2 * axisA + (percent.y - .5f) * 2 * axisB;
+                // now trick it into a sphere
+                Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
                 // set the vercite i the value of pointOnUnitCube
-                vertices[i] = pointOnUnitCube;
+                vertices[i] = pointOnUnitSphere;
 
                 // create triangles
                 if (x != resolution-1 && y != resolution-1) // dont create triangle on the last x and y ligne
@@ -67,7 +69,7 @@ public class PlanetFaceMesh
                     // sec tri
                     triangles[triIndex+3] = i;
                     triangles[triIndex+4] = i + 1;
-                    triangles[triIndex+5] = i + resolution + 2;
+                    triangles[triIndex+5] = i + resolution + 1;
 
                     // increment triIndex by 6
                     triIndex += 6;
