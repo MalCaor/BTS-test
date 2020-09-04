@@ -80,8 +80,9 @@ public class PlanetFaceMesh
         mesh.Clear();
         // assign to mesh the vertices and triangles
         mesh.vertices = vertices;
+        mesh.normals = vertices; // vert are alredy normalized
         mesh.triangles = triangles;
         // Recalc all
-        mesh.RecalculateNormals();
+        //mesh.RecalculateNormals();
     }
 }
