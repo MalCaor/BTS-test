@@ -10,6 +10,7 @@ public class PlanetFaceMesh
     // This Class creat the mesh of the planet face
 
     // Vars
+    PlanetShapeGenerator shapeGenerator;
     Mesh mesh;
     int resolution;
     // way it's facing
@@ -19,9 +20,10 @@ public class PlanetFaceMesh
     Vector3 axisB;
 
     // Constructor
-    public PlanetFaceMesh(Mesh mesh, int resolution, Vector3 localUp)
+    public PlanetFaceMesh(PlanetShapeGenerator shapeGenerator, Mesh mesh, int resolution, Vector3 localUp)
     {
         // Set params
+        this.shapeGenerator = shapeGenerator;
         this.mesh = mesh;
         this.resolution = resolution;
         this.localUp = localUp;
@@ -55,7 +57,7 @@ public class PlanetFaceMesh
                 // now trick it into a sphere
                 Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
                 // set the vercite i the value of pointOnUnitCube
-                vertices[i] = pointOnUnitSphere;
+                vertices[i] = shapeGenerator.CalculatePointOnPlanet(pointOnUnitSphere);
 
                 // create triangles
                 if (x != resolution-1 && y != resolution-1) // dont create triangle on the last x and y ligne

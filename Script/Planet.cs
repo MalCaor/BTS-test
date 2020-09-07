@@ -7,6 +7,11 @@ public class Planet : MonoBehaviour
     // Planet Class (name is explicit i think)
 
     // Vars
+    // settings
+    public ShapeSettings shapeSettings;
+    // generator
+    PlanetShapeGenerator shapeGenerator;
+    // resolution
     [Range(2, 256)]
     public int resolution = 10;
     // meshFilters contain the 6 faces of the planet (it's a cube triked into a sphere :p )
@@ -17,13 +22,14 @@ public class Planet : MonoBehaviour
     // OnValidate is the order of call
     private void OnValidate()
     {
-        Initialize();
-        GenerateMesh();
+        GeneratePlanet();
     }
 
     // Initialize... initialize the planet
     void Initialize()
     {
+        // declare the shape gene
+        shapeGenerator = new PlanetShapeGenerator(shapeSettings);
         // declare 6 mesh faces
         if (meshFilters == null || meshFilters.Length == 0)
         {
@@ -49,8 +55,15 @@ public class Planet : MonoBehaviour
                 meshFilters[i].sharedMesh = new Mesh();
             }
             // Create the Face
-            planetFaces[i] = new PlanetFaceMesh(meshFilters[i].sharedMesh, resolution, directions[i]);
+            planetFaces[i] = new PlanetFaceMesh(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
         }
+    }
+
+    // Generate Planet
+    public void GeneratePlanet()
+    {
+        Initialize();
+        GenerateMesh();
     }
 
     // Generate Mesh
@@ -60,5 +73,12 @@ public class Planet : MonoBehaviour
         {
             face.ConstructMesh();
         }
+    }
+
+    // Settings update Meth
+    public void OnShapeSettingsUpdated()
+    {
+        Initialize();
+        GenerateMesh();
     }
 }
