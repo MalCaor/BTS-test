@@ -21,6 +21,7 @@ public class PlanetEditor : Editor
     {
         using(var check = new EditorGUI.ChangeCheckScope())
         {
+            EditorGUILayout.InspectorTitlebar(true, settings);
             Editor editor = CreateEditor(settings);
             editor.OnInspectorGUI();
 
