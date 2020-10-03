@@ -18,12 +18,11 @@ public class Planet : MonoBehaviour
     [SerializeField, HideInInspector]
     MeshFilter[] meshFilters;
     PlanetFaceMesh[] planetFaces;
-
-    // OnValidate is the order of call
-    private void OnValidate()
-    {
-        GeneratePlanet();
-    }
+    // bool autoupdate in the editor
+    public bool autoUpdate = true;
+    // foldout for the editor display
+    [HideInInspector]
+    public bool shapeSettingsFoldout;
 
     // Initialize... initialize the planet
     void Initialize()
@@ -78,7 +77,10 @@ public class Planet : MonoBehaviour
     // Settings update Meth
     public void OnShapeSettingsUpdated()
     {
-        Initialize();
-        GenerateMesh();
+        if(autoUpdate)
+        {
+            Initialize();
+            GenerateMesh();
+        }
     }
 }
